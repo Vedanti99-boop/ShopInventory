@@ -1,0 +1,186 @@
+<!-- <div class="brickwall"> -->
+
+    <nav class="navbar navbar-light box-shadow navbar-expand-lg  transparent ">
+        <!-- Navbar content -->
+        <div class="container-fluid">
+            <a class="navbar-brand">The Shop Inventory</a>
+            <form class="d-flex">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link  mx-2" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active mx-2" href="#">Billing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="#">Account</a>
+                        </li>
+                    </ul>
+                </div>
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    
+    
+    <div class="row ms-3">
+        <div class="col-6  py-3" *ngIf="hide">
+            <div class="row justify-content-center">
+    
+                <!-- <div class="col-6"> -->
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="exampleFormControlInput1"
+                        placeholder="Search Product by Name" [(ngModel)]="nameSearch">
+                </div>
+    
+            </div>
+    
+            <div class="row justify-content-center">
+                <!-- <div class="col-3"> -->
+    
+                <table class="table ">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="text-center">Product Id</th>
+                            <th scope="col" class="text-center">Product Name</th>
+                            <th scope="col" class="text-center">MRP</th>
+                            <th scope="col" class="text-center">Avalability</th>
+                            <th scope="col" class="text-center">Quantity</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of product_arr | filter:nameSearch">
+                            <th scope="row">{{product.id}}</th>
+                            <td>{{product.name}}</td>
+                            <td>&#8377; {{product.price}}</td>
+                            <td>
+                                <h5><span class="badge">{{product.Avalability}}</span></h5>
+                            </td>
+                            <td>
+                                <input type="number" min="1" class="qty1" #qty placeholder="Quantity" value="{{x}}">
+    
+                            </td>
+                            <td><button type="button" class="btn crimson"
+    
+                                    (click)="addItem(product.name,product.price,qty.value)"
+                                    (click)="qty.value = '1'">Add</button></td>
+    
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- </div> -->
+            </div>
+    
+            <!-- <div class="row justify-content-center">
+                <button type="button" class="btn black" (click)="clear()" (click)="getRandomNum()"
+                    (click)="refreshTime()">Add New Bill</button>
+            </div> -->
+        </div>
+    
+    
+    
+        <div class="col px-3 ">
+    
+            <div class="my-3 mx-3 rounded-3">
+              <div class="row justify-content-center">
+                <button type="button" class="btn olive text-light col-5  mb-3" (click)="clear()" (click)="getRandomNum()"
+                    (click)="refreshTime()">Add New Bill</button>
+                    <div class="col-1"></div>
+                    <button type="button" class="btn  steel col-5  mb-3" (click)="clear()" (click)="getRandomNum()"
+                    (click)="refreshTime()">History</button>
+            </div>
+                <div class="border px-3 fw-light  bg-light">
+                    <h3 class="text-center border-bottom my-3 pb-1">Saraf Traders.Ltd</h3>
+    
+                    <div class="row">
+                        <div class="col">
+                            <p class="mx-2"> Bill No:{{num}}</p>
+    
+                        </div>
+                        <div class="col">
+                            <p class="text-center"> Time:{{date|date:'shortTime'}}</p>
+    
+                        </div>
+                        <div class="col">
+                            <p class=" mx-2 text-end">Date:{{today|date:'dd/MM/yyyy'}}</p>
+    
+                        </div>
+                    </div>
+    
+    
+                    <table class="table table-borderless border-bottom">
+                        <thead class="thead-light">
+                            <tr class="border-bottom">
+    
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">    </th>
+    
+                            </tr>
+                        </thead>
+                        <tbody>
+    
+                            <tr *ngFor="let pro of products">
+                                <th scope="row">{{pro.name}}</th>
+                                <td>{{pro.quantity}}</td>
+                                <td>{{pro.price}}</td>
+                                <td *ngIf="hide"><button type="button" class="btn aqua"
+                                  id = {{pro.name}}
+                                   (click)="delete(pro.name,pro.price)">Delete</button></td>
+    
+                            </tr>
+                        </tbody>
+    
+                    </table>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="mx-3">Total: </h5>
+    
+                        </div>
+                        <div class="col">
+                            <h5 class="text-end me-5 px-4">{{total}}</h5>
+    
+                        </div>
+                    </div>
+    
+                    <div class="row justify-content-center" *ngIf="hide">
+                        <button type="button" class="btn cream  text-dark my-3" (click)="expand()"> Generate Bill</button>
+                    </div>
+    
+                    <div class="row justify-content-center my-3" *ngIf="print" role="group"
+                        aria-label="Basic mixed styles example">
+                        <button type="button" class=" col-5 btn cream text-dark " (click)="expand()">Go Back</button>
+                        `<div class="col-1"></div>
+                        <button type="button" class="col-5 btn turqoise" (click)="printFunction()"
+                            (click)="expand()">Print</button>
+                    </div>
+    
+    
+                </div>
+    
+            </div>
+    
+    
+        </div>
+    
+    
+    
+    
+    </div>
+    
+    
+    
+    
+    <div class="align-items-end">
+        <img src="assets/images/pngegg2.png" alt="" srcset="" class="bottom-leaves">
+    </div>
+    
+    
